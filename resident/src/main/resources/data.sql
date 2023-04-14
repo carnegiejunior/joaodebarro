@@ -1,1 +1,1 @@
-INSERT INTO residential_unit (id, designation) VALUES (1,'101');
+INSERT INTO TB_RESIDENTIAL_UNIT (id, designation) VALUES (1,'101');

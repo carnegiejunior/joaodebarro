@@ -1,18 +1,11 @@
 package com.joaodebarro.resident;
 
-import com.joaodebarro.resident.dto.ResidentRegistrationRequest;
-import com.joaodebarro.resident.dto.ResidentResponse;
-import com.joaodebarro.resident.exceptionHandler.defaultExceptions.EntityNotFoundException;
-import com.joaodebarro.resident.exceptionHandler.defaultExceptions.ResourceNotFoundWithIdException;
-import com.joaodebarro.resident.models.Resident;
-import com.joaodebarro.resident.models.ResidentialUnit;
-import com.joaodebarro.resident.repositories.ResidentRepository;
-import com.joaodebarro.resident.repositories.ResidentialUnitRepository;
+import com.carnegieworks.exceptionHandler.defaultExceptions.ResourceNotFoundWithIdException;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.util.Optional;
 
 @Service
@@ -23,46 +16,44 @@ public class ResidentService {
     private final ResidentRepository residentRepository;
     private final ResidentialUnitRepository residentialUnitRepository;
 
-    public ResidentResponse registerResident(ResidentRegistrationRequest residentRegistrationRequest) {
-        ResidentialUnit residentialUnit = residentialUnitRepository.findById(residentRegistrationRequest.residentialUnitId())
-                .orElseThrow(() -> new EntityNotFoundException("Residential unit with id: %s not found".formatted(residentRegistrationRequest.residentialUnitId())));
+    public ResidentResponseDTO registerNewResident(ResidentRequestDTO residentRequestDTO) {
 
-        LocalDate birthDate = LocalDate.parse(residentRegistrationRequest.birthDate());
+        ResidentialUnitModel residentialUnit = residentialUnitRepository.findById(residentRequestDTO.residentialUnitId())
+                .orElseThrow(() -> new EntityNotFoundException("Residential unit with id: %s not found".formatted(residentRequestDTO.residentialUnitId())));
 
-        Resident resident = Resident.builder()
-                .name(residentRegistrationRequest.name())
-                .cpf(residentRegistrationRequest.cpf())
-                .phoneNumber(residentRegistrationRequest.phoneNumber())
-                .email(residentRegistrationRequest.email())
-                .birthDate(birthDate)
+        ResidentModel resident = ResidentModel.builder()
+                .name(residentRequestDTO.name())
+                .cpf(residentRequestDTO.cpf())
+                .phoneNumber(residentRequestDTO.phoneNumber())
+                .email(residentRequestDTO.email())
+                .birthDate(residentRequestDTO.birthDate())
                 .residentialUnit(residentialUnit)
                 .build();
 
-        Resident residentSaved = residentRepository.save(resident);
+        ResidentModel residentModelSaved = residentRepository.save(resident);
 
-        ResidentResponse response = ResidentResponse.builder()
-                .name(residentSaved.getName())
-                .email(residentSaved.getEmail())
-                .cpf(residentSaved.getEmail())
-                .birthDate(residentSaved.getBirthDate())
-                .phoneNumber(residentSaved.getPhoneNumber())
-                .residentialUnit(residentSaved.getResidentialUnit())
+        return ResidentResponseDTO.builder()
+                .name(residentModelSaved.getName())
+                .email(residentModelSaved.getEmail())
+                .cpf(residentModelSaved.getEmail())
+                .birthDate(residentModelSaved.getBirthDate())
+                .phoneNumber(residentModelSaved.getPhoneNumber())
+                .residentialUnit(residentModelSaved.getResidentialUnit())
                 .build();
-        return response;
     }
 
-    public Optional<ResidentResponse> fetchResidentById(Long residentId) {
-        ResidentResponse residentResponse = this.residentRepository.findByIdWithResidentialUnit(residentId)
-                .map(resident ->
-                        ResidentResponse.builder()
-                                .name(resident.getName())
-                                .cpf(resident.getCpf())
-                                .phoneNumber(resident.getPhoneNumber())
-                                .email(resident.getEmail())
-                                .birthDate(resident.getBirthDate())
-                                .residentialUnit(resident.getResidentialUnit())
+    public Optional<ResidentResponseDTO> fetchResidentById(Long residentId) {
+        ResidentResponseDTO residentResponseDTO = this.residentRepository.findResidentById(residentId)
+                .map(residentModel ->
+                        ResidentResponseDTO.builder()
+                                .name(residentModel.getName())
+                                .cpf(residentModel.getCpf())
+                                .phoneNumber(residentModel.getPhoneNumber())
+                                .email(residentModel.getEmail())
+                                .birthDate(residentModel.getBirthDate())
+                                .residentialUnit(residentModel.getResidentialUnit())
                                 .build()
                 ).orElseThrow(() -> new ResourceNotFoundWithIdException(residentId));
-        return Optional.of(residentResponse);
+        return Optional.of(residentResponseDTO);
     }
 }

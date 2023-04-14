@@ -9,6 +9,7 @@
     <packaging>pom</packaging>
     <modules>
       <module>resident</module>
+        <module>carnegie-commons-microservices</module>
     </modules>
     <name>joaodebarro</name>
     <url>https://www.carnegieworks.com/joaodebarro</url>
