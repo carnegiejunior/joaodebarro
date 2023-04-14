@@ -1,0 +1,1 @@
+INSERT INTO residential_unit (id, designation) VALUES (1,'101');
