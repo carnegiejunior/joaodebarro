@@ -1,4 +1,4 @@
-package com.joaodebarro.resident;
+package com.joaodebarro.resident.domain.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
@@ -16,7 +16,7 @@ import java.time.LocalDate;
 @Builder
 @Getter
 @Table(name = "TB_RESIDENT")
-public class ResidentModel {
+public class ResidentEntity {
     @Id
     @SequenceGenerator(name = "resident_id_sequence", sequenceName = "resident_id_sequence")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "resident_id_sequence")
@@ -50,6 +50,6 @@ public class ResidentModel {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "residential_unit_id", nullable = false)
     @NotNull
-    private ResidentialUnitModel residentialUnit;
+    private ResidentialUnitEntity residentialUnit;
 
 }

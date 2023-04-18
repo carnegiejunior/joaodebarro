@@ -1,6 +1,6 @@
-package com.joaodebarro.resident;
+package com.joaodebarro.resident.domain.dtos;
 
-import com.joaodebarro.resident.ResidentialUnitModel;
+import com.joaodebarro.resident.domain.entities.ResidentialUnitEntity;
 import jakarta.validation.constraints.*;
 import lombok.Builder;
 import org.hibernate.validator.constraints.br.CPF;
@@ -30,5 +30,5 @@ public record ResidentResponseDTO(
         LocalDate birthDate,
 
         @NotNull
-        ResidentialUnitModel residentialUnit
+        ResidentialUnitEntity residentialUnit
 ) {}

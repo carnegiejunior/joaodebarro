@@ -4,7 +4,7 @@ package com.carnegieworks.exceptionHandler;
 import com.carnegieworks.exceptionHandler.defaultExceptions.BusinessException;
 import com.carnegieworks.exceptionHandler.defaultExceptions.EntityInUseException;
 import com.carnegieworks.exceptionHandler.defaultExceptions.EntityNotFoundException;
-import com.carnegieworks.exceptionHandler.defaultExceptions.ResourceNotFoundWithIdException;
+import com.carnegieworks.exceptionHandler.defaultExceptions.ResourceNotFoundException;
 import com.fasterxml.jackson.databind.JsonMappingException.Reference;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.databind.exc.PropertyBindingException;
@@ -219,8 +219,22 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
     }
 
-    @ExceptionHandler(ResourceNotFoundWithIdException.class)
-    public ResponseEntity<?> handleResourceNotFoundWithIdException(ResourceNotFoundWithIdException ex,
+//    @ExceptionHandler(ResourceNotFoundWithIdException.class)
+//    public ResponseEntity<?> handleResourceNotFoundWithIdException(ResourceNotFoundWithIdException ex,
+//                                                  WebRequest request) {
+//
+//        HttpStatus status = HttpStatus.NOT_FOUND;
+//        ProblemType problemType = ProblemType.RECURSO_NAO_ENCONTRADO;
+//        String detail = ex.getMessage();
+//
+//        Problem problem = createProblemBuilder(status, problemType, detail)
+//                .userMessage(detail)
+//                .build();
+//
+//        return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
+//    }
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<?> handleResourceNotFoundWithIdException(ResourceNotFoundException ex,
                                                   WebRequest request) {
 
         HttpStatus status = HttpStatus.NOT_FOUND;

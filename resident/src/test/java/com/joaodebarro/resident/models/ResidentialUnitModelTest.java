@@ -1,6 +1,6 @@
 package com.joaodebarro.resident.models;
 
-import com.joaodebarro.resident.ResidentialUnitModel;
+import com.joaodebarro.resident.domain.entities.ResidentialUnitEntity;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
@@ -26,7 +26,7 @@ class ResidentialUnitModelTest {
     @Test
     @DisplayName("Should not allow a residential unit with a designation that is too short")
     public void shouldNotAllowResidentialUnitWithShortDesignation() {
-        ResidentialUnitModel residentialUnitModel = ResidentialUnitModel.builder()
+        ResidentialUnitEntity residentialUnitModel = ResidentialUnitEntity.builder()
                 .designation("12") // short designation
                 .build();
 
@@ -39,7 +39,7 @@ class ResidentialUnitModelTest {
     @Test
     @DisplayName("Should not allow a residential unit with a designation that is too long")
     public void shouldNotAllowResidentialUnitWithLongDesignation() {
-        ResidentialUnitModel residentialUnitModel = ResidentialUnitModel.builder()
+        ResidentialUnitEntity residentialUnitModel = ResidentialUnitEntity.builder()
                 .designation("12345678901") // long designation
                 .build();
 

@@ -1,7 +1,6 @@
 com\carnegieworks\exceptionHandler\defaultExceptions\EntityInUseException.class
 com\carnegieworks\exceptionHandler\Problem$Object.class
 com\carnegieworks\exceptionHandler\ProblemType.class
-com\carnegieworks\exceptionHandler\defaultExceptions\ResourceNotFoundWithIdException.class
 com\carnegieworks\exceptionHandler\Problem$ProblemBuilder.class
 com\carnegieworks\exceptionHandler\Problem.class
 com\carnegieworks\exceptionHandler\ApiExceptionHandler.class

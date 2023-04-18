@@ -1,5 +1,11 @@
 package com.joaodebarro.resident;
 
+import com.joaodebarro.resident.domain.dtos.ResidentRequestDTO;
+import com.joaodebarro.resident.domain.entities.ResidentEntity;
+import com.joaodebarro.resident.domain.entities.ResidentialUnitEntity;
+import com.joaodebarro.resident.domain.repositories.ResidentRepository;
+import com.joaodebarro.resident.domain.repositories.ResidentialUnitRepository;
+import com.joaodebarro.resident.domain.services.ResidentService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -34,7 +40,7 @@ public class ResidentModelServiceTest {
     @Test
     void testSaveResident() {
 
-        ResidentialUnitModel residentialUnitModel = ResidentialUnitModel.builder()
+        ResidentialUnitEntity residentialUnitModel = ResidentialUnitEntity.builder()
                 .id(1L)
                 .designation("Apt 101")
                 .build();
@@ -50,7 +56,7 @@ public class ResidentModelServiceTest {
                 .residentialUnitId(1L)
                 .build();
 
-        ResidentModel residentModel = ResidentModel.builder()
+        ResidentEntity residentModel = ResidentEntity.builder()
                 .name(request.name())
                 .cpf(request.cpf())
                 .phoneNumber(request.phoneNumber())
@@ -96,13 +102,13 @@ public class ResidentModelServiceTest {
 //    void shouldRegisterNewResident(){
 //        // Given
 //
-//        ResidentModel resident = ResidentModel.builder()
+//        ResidentEntity resident = ResidentEntity.builder()
 //                .name("Fulano")
 //                .cpf("70609039334")
 //                .email("fulano@domamin.com")
 //                .birthDate(LocalDate.of(1976,8,3))
 //                .phoneNumber("991404789")
-//                .residentialUnitModel(ResidentialUnitModel.builder().id(1L).designation("101").build())
+//                .residentialUnitModel(ResidentialUnitEntity.builder().id(1L).designation("101").build())
 //                .build();
 //
 ////        ResidentResponseDTO registrationResponse = residentService.save(resident);

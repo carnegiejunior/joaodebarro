@@ -1,4 +1,4 @@
-package com.joaodebarro.resident;
+package com.joaodebarro.resident.domain.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
@@ -10,7 +10,7 @@ import lombok.*;
 @Builder
 @Getter
 @Table(name = "TB_RESIDENTIAL_UNIT")
-public class ResidentialUnitModel {
+public class ResidentialUnitEntity {
     @Id
     @SequenceGenerator(name = "residentUnit_id_sequence", sequenceName = "residentUnit_id_sequence")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "residentUnit_id_sequence")

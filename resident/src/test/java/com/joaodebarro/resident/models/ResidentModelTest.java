@@ -1,6 +1,6 @@
 package com.joaodebarro.resident.models;
 
-import com.joaodebarro.resident.ResidentModel;
+import com.joaodebarro.resident.domain.entities.ResidentEntity;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
@@ -28,7 +28,7 @@ class ResidentModelTest {
     @Test
     @DisplayName("Should not allow a resident with invalid fields")
     public void shouldNotAllowResidentWithInvalidFields() {
-        ResidentModel residentModel = ResidentModel.builder()
+        ResidentEntity residentModel = ResidentEntity.builder()
                 .name("") // invalid name
                 .cpf("123456789012345") // invalid CPF
                 .email("invalid-email") // invalid email

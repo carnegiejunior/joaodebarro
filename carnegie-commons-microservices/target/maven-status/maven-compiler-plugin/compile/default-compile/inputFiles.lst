@@ -3,6 +3,7 @@ C:\Users\carne\Desktop\cursos\joaodebarro\carnegie-commons-microservices\src\mai
 C:\Users\carne\Desktop\cursos\joaodebarro\carnegie-commons-microservices\src\main\java\com\carnegieworks\exceptionHandler\defaultExceptions\EntityInUseException.java
 C:\Users\carne\Desktop\cursos\joaodebarro\carnegie-commons-microservices\src\main\java\com\carnegieworks\exceptionHandler\defaultExceptions\BusinessException.java
 C:\Users\carne\Desktop\cursos\joaodebarro\carnegie-commons-microservices\src\main\java\com\carnegieworks\exceptionHandler\ApiExceptionHandler.java
+C:\Users\carne\Desktop\cursos\joaodebarro\carnegie-commons-microservices\src\main\java\com\carnegieworks\exceptionHandler\defaultExceptions\ResourceNotFoundWithException.java
 C:\Users\carne\Desktop\cursos\joaodebarro\carnegie-commons-microservices\src\main\java\com\carnegieworks\exceptionHandler\ProblemType.java
 C:\Users\carne\Desktop\cursos\joaodebarro\carnegie-commons-microservices\src\main\java\com\carnegieworks\exceptionHandler\defaultExceptions\ResourceNotFoundWithIdException.java
 C:\Users\carne\Desktop\cursos\joaodebarro\carnegie-commons-microservices\src\main\java\com\carnegieworks\exceptionHandler\defaultExceptions\EntityNotFoundException.java
