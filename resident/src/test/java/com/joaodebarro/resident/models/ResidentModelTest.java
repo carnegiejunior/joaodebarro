@@ -33,7 +33,7 @@ class ResidentModelTest {
                 .cpf("123456789012345") // invalid CPF
                 .email("invalid-email") // invalid email
                 .birthDate(LocalDate.now().plusDays(1)) // future birth date
-                .residentialUnitModel(null) // null residential unit
+                .residentialUnit(null) // null residential unit
                 .build();
 
         var violations = validator.validate(residentModel);

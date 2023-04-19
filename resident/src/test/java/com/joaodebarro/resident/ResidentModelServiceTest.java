@@ -62,7 +62,7 @@ public class ResidentModelServiceTest {
                 .phoneNumber(request.phoneNumber())
                 .email(request.email())
                 .birthDate(request.birthDate())
-                .residentialUnitModel(residentialUnitModel)
+                .residentialUnit(residentialUnitModel)
                 .build();
 
         when(residentRepository.save(residentModel)).thenReturn(residentModel);
