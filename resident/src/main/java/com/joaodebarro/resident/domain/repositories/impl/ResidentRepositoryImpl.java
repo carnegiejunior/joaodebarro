@@ -1,62 +1,58 @@
 package com.joaodebarro.resident.domain.repositories.impl;
 
-import com.joaodebarro.resident.domain.dtos.ResidentRequestDTO;
-import com.joaodebarro.resident.domain.dtos.ResidentResponseDTO;
+import com.joaodebarro.resident.domain.dtos.ResidentRequestQueryDTO;
 import com.joaodebarro.resident.domain.entities.ResidentEntity;
 import com.joaodebarro.resident.domain.entities.ResidentialUnitEntity;
 import com.joaodebarro.resident.domain.interfaces.ResidentRepositoryQueries;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.*;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Repository
 public class ResidentRepositoryImpl implements ResidentRepositoryQueries {
 
     @PersistenceContext
-    private EntityManager manager;
-
+    private EntityManager entityManager;
 
     @Override
-    public Optional<List<ResidentEntity>> findAllResidents(ResidentRequestDTO residentRequestDTO, Pageable pageable)
-    {
-
-        CriteriaBuilder criteriaBuilder = manager.getCriteriaBuilder();
-
-        CriteriaQuery<ResidentEntity> query = criteriaBuilder.createQuery(ResidentEntity.class);
-
-        Root<ResidentEntity> root = query.from(ResidentEntity.class);
-        Fetch<ResidentEntity, ResidentialUnitEntity> residentialUnitFetch = root.fetch("residentialUnit",JoinType.LEFT);
-
-
-        ArrayList<Predicate> predicates = new ArrayList<>();
-
-        Expression<String> residentNameLowercaseExpression = criteriaBuilder.lower(criteriaBuilder.literal("%"+residentRequestDTO.name()+"%"));
-        Predicate residentNamePredicate = criteriaBuilder.like(criteriaBuilder.lower(root.get("name")),residentNameLowercaseExpression);
-
-        Expression<String> residentCPFExpression = criteriaBuilder.lower(criteriaBuilder.literal(residentRequestDTO.cpf()));
-        Predicate residentCPFPredicate = criteriaBuilder.equal(criteriaBuilder.lower(root.get("cpf")),residentCPFExpression);
-
-        predicates.add(residentNamePredicate);
-        predicates.add(residentCPFPredicate);
-
-        query.where(predicates.toArray(new Predicate[predicates.size()])); // uma das formas de converter um list em um array
-
-
-
-        TypedQuery<ResidentEntity> result = manager.createQuery(query);
-        result.setFirstResult(pageable.getPageNumber() * pageable.getPageSize());
-        result.setMaxResults(pageable.getPageSize());
-        if (result.getResultList().isEmpty()) return Optional.empty();
-        return Optional.of(result.getResultList());
-
+    public Optional<List<ResidentEntity>> findAllResidents(ResidentRequestQueryDTO request, Pageable pageable) {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<ResidentEntity> cq = cb.createQuery(ResidentEntity.class);
+        Root<ResidentEntity> root = cq.from(ResidentEntity.class);
+        root.fetch("residentialUnit", JoinType.LEFT);
+        cq.select(root);
+        cq.where(getPredicate(request, cb, root));
+        List<ResidentEntity> result = entityManager.createQuery(cq).getResultList();
+        return Optional.of(result);
     }
 
+    private static Predicate getPredicate(ResidentRequestQueryDTO request, CriteriaBuilder cb, Root<ResidentEntity> root) {
+
+        Predicate predicate = cb.conjunction();
+
+        List<String> names = request.name().stream().toList();
+        List<String> cpfs = request.cpf().stream().toList();
+
+        if (!names.isEmpty()) {
+            Expression<String> nameExpr = cb.lower(root.get("name"));
+            List<Predicate> namePredicates = new ArrayList<>();
+            for (String name : names) {
+                namePredicates.add(cb.like(nameExpr, "%" + name.toLowerCase() + "%"));
+            }
+            predicate = cb.and(predicate, cb.or(namePredicates.toArray(new Predicate[0])));
+        }
+
+        if (!cpfs.isEmpty()) {
+            Expression<Integer> cpfExpr = root.get("cpf");
+            predicate = cb.and(predicate, cpfExpr.in(cpfs));
+        }
+
+        return predicate;
+    }
 }

@@ -8,27 +8,27 @@ import java.time.LocalDate;
 
 @Builder
 public record ResidentRequestDTO(
-//        @NotBlank
-//        @Size(min = 3, max = 50)
+        @NotBlank
+        @Size(min = 3, max = 50)
         String name,
 
-//        @CPF
-//        @Size(min = 11, max = 11)
+        @CPF
+        @Size(min = 11, max = 11)
         String cpf,
 
-//        @Size(max = 14)
+        @Size(max = 14)
         String phoneNumber,
 
-//        @Email
-//        @NotBlank
-//        @Size(min = 5, max = 100)
+        @Email
+        @NotBlank
+        @Size(min = 5, max = 100)
         String email,
 
-//        @Past
-//        @NotNull
+        @Past
+        @NotNull
         LocalDate birthDate,
 
-//        @NotNull
+        @NotNull
         Long residentialUnitId
 ) {
 

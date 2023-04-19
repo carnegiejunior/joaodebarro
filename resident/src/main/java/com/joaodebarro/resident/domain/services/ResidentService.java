@@ -3,6 +3,7 @@ package com.joaodebarro.resident.domain.services;
 import com.carnegieworks.exceptionHandler.defaultExceptions.ResourceNotFoundException;
 import com.joaodebarro.resident.core.PageableTranslator;
 import com.joaodebarro.resident.domain.dtos.ResidentRequestDTO;
+import com.joaodebarro.resident.domain.dtos.ResidentRequestQueryDTO;
 import com.joaodebarro.resident.domain.dtos.ResidentResponseDTO;
 import com.joaodebarro.resident.domain.entities.ResidentEntity;
 import com.joaodebarro.resident.domain.entities.ResidentialUnitEntity;
@@ -30,6 +31,8 @@ public class ResidentService {
     private final ResidentRepository residentRepository;
     private final ResidentialUnitRepository residentialUnitRepository;
 
+    //    @Transactional
+//    Deve ser usado em todos os métodos públicos que envolvam transações com o banco de dados
     public ResidentResponseDTO registerNewResident(ResidentRequestDTO residentRequestDTO) {
 
         ResidentialUnitEntity residentialUnit = residentialUnitRepository.findById(residentRequestDTO.residentialUnitId())
@@ -71,22 +74,27 @@ public class ResidentService {
         return Optional.of(residentResponseDTO);
     }
 
-    public ResponseEntity<Page<ResidentResponseDTO>> findAllResidents(ResidentRequestDTO residentRequestDTO, Pageable pageable) {
-
-//        if (residentName.isBlank()) return ResponseEntity.notFound().build();
-//        List<ResidentEntity> foundResidents = this.residentRepository.findAllByPartialName(residentName, translatePageable(pageable))
-//                .orElse(List.of());
-
-        List<ResidentEntity> foundResidents = residentRepository.findAllResidents(residentRequestDTO, translatePageable(pageable)).orElse(List.of());
+    public ResponseEntity<Page<ResidentResponseDTO>> findAllResidents(ResidentRequestQueryDTO residentRequestQueryDTO, Pageable pageable) {
+        List<ResidentEntity> foundResidents =
+                residentRepository.findAllResidents(residentRequestQueryDTO, translatePageable(pageable))
+                        .orElse(List.of());
 
         if (foundResidents.isEmpty()) return ResponseEntity.notFound().build();
         List<ResidentResponseDTO> foundResidentsMappedToResponseDTOList = foundResidents
-                        .stream()
-                        .map(this::mapToResidentResponseDTO)
-                        .toList();
+                .stream()
+                .map(this::mapToResidentResponseDTO)
+                .toList();
         Page<ResidentResponseDTO> pageableResidentResponseDTO = new PageImpl<>(foundResidentsMappedToResponseDTOList, pageable, foundResidentsMappedToResponseDTOList.size());
         return ResponseEntity.status(HttpStatus.OK).body(pageableResidentResponseDTO);
     }
+
+    @Transactional
+    public ResponseEntity deleteResidentById(Long id) {
+        residentRepository.deleteById(id);
+        residentRepository.flush();
+        return ResponseEntity.noContent().build();
+    }
+
 
     private ResidentResponseDTO mapToResidentResponseDTO(ResidentEntity residentModel) {
         return ResidentResponseDTO.builder()
@@ -100,19 +108,19 @@ public class ResidentService {
                 .build();
     }
 
-    private Pageable translatePageable(Pageable pageable){
+    private Pageable translatePageable(Pageable pageable) {
 
         var mappedFields = Map.of(
-                "id","id",
-                "name","name",
-                "cpf","cpf",
-                "email","email",
-                "birthDate","birthDate",
-                "phoneNumber","phoneNumber",
-                "residentialUnit","residentialUnit.designation"
+                "id", "id",
+                "name", "name",
+                "cpf", "cpf",
+                "email", "email",
+                "birthDate", "birthDate",
+                "phoneNumber", "phoneNumber",
+                "residentialUnit", "residentialUnit.designation"
         );
 
-        return PageableTranslator.translate(pageable,mappedFields);
+        return PageableTranslator.translate(pageable, mappedFields);
     }
 
 }
