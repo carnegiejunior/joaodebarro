@@ -1,6 +1,6 @@
 package com.joaodebarro.resident.models;
 
-import com.joaodebarro.resident.domain.entities.ResidentEntity;
+import com.joaodebarro.resident.ResidentEntity;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;

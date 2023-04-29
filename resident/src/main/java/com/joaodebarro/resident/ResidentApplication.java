@@ -8,7 +8,6 @@ import java.util.TimeZone;
 
 @SpringBootApplication(
 		scanBasePackages = {
-				"com.carnegieworks.configuration",
 				"com.carnegieworks.exceptionHandler",
 				"com.joaodebarro.resident"
 		}
@@ -17,7 +16,6 @@ import java.util.TimeZone;
 public class ResidentApplication {
 
 	public static void main(String[] args) {
-//		TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
 		SpringApplication.run(ResidentApplication.class, args);
 	}
 

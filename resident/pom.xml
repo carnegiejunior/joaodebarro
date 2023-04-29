@@ -7,15 +7,22 @@
         <groupId>com.carnegieworks.joaodebarro</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <groupId>com.example</groupId>
-    <artifactId>residentModel</artifactId>
+    <groupId>com.carnegieworks</groupId>
+    <artifactId>resident</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>resident</name>
-    <description>residentModel</description>
-    <properties>
-        <java.version>17</java.version>
-    </properties>
+    <description>resident service</description>
+
+    <build>
+    <plugins>
+        <plugin>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>
+        </plugin>
+    </plugins>
+    </build>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -46,6 +53,11 @@
             <artifactId>carnegie-commons-microservices</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.ws.rs</groupId>
+            <artifactId>jakarta.ws.rs-api</artifactId>
+            <version>3.1.0</version>
         </dependency>
     </dependencies>
 </project>

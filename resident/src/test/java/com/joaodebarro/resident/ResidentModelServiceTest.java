@@ -1,11 +1,5 @@
 package com.joaodebarro.resident;
 
-import com.joaodebarro.resident.domain.dtos.ResidentRequestDTO;
-import com.joaodebarro.resident.domain.entities.ResidentEntity;
-import com.joaodebarro.resident.domain.entities.ResidentialUnitEntity;
-import com.joaodebarro.resident.domain.repositories.ResidentRepository;
-import com.joaodebarro.resident.domain.repositories.ResidentialUnitRepository;
-import com.joaodebarro.resident.domain.services.ResidentService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

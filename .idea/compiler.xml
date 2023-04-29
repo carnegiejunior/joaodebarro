@@ -8,11 +8,11 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="carnegie-commons-microservices" />
-        <module name="residentModel" />
+        <module name="resident" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="resident" target="17" />
+      <module name="carnegie-microservices-exceptionHandler" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
