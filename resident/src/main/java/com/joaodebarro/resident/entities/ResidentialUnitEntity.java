@@ -1,4 +1,4 @@
-package com.joaodebarro.resident;
+package com.joaodebarro.resident.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;

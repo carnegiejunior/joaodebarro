@@ -1,4 +1,4 @@
-package com.joaodebarro.resident;
+package com.joaodebarro.resident.dtos;
 
 import jakarta.validation.constraints.*;
 import lombok.Builder;

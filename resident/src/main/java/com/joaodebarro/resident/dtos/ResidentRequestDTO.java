@@ -1,6 +1,5 @@
-package com.joaodebarro.resident;
+package com.joaodebarro.resident.dtos;
 
-import com.joaodebarro.resident.ResidentialUnitEntity;
 import jakarta.validation.constraints.*;
 import lombok.Builder;
 import org.hibernate.validator.constraints.br.CPF;
@@ -8,8 +7,7 @@ import org.hibernate.validator.constraints.br.CPF;
 import java.time.LocalDate;
 
 @Builder
-public record ResidentResponseDTO(
-
+public record ResidentRequestDTO(
         Long id,
 
         @NotBlank
@@ -33,5 +31,7 @@ public record ResidentResponseDTO(
         LocalDate birthDate,
 
         @NotNull
-        ResidentialUnitEntity residentialUnit
-) {}
+        Long residentialUnitId
+) {
+
+}

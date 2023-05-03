@@ -2,7 +2,14 @@ package com.joaodebarro.resident;
 
 import com.carnegieworks.exceptionHandler.defaultExceptions.EntityNotFoundException;
 import com.carnegieworks.exceptionHandler.defaultExceptions.ResourceNotFoundException;
+import com.joaodebarro.resident.dtos.ResidentRequestDTO;
+import com.joaodebarro.resident.dtos.ResidentRequestQueryDTO;
+import com.joaodebarro.resident.dtos.ResidentResponseDTO;
+import com.joaodebarro.resident.entities.ResidentEntity;
+import com.joaodebarro.resident.entities.ResidentialUnitEntity;
 import com.joaodebarro.resident.lib.pageable.PageableTranslator;
+import com.joaodebarro.resident.repositories.ResidentRepository;
+import com.joaodebarro.resident.repositories.ResidentialUnitRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -37,7 +44,7 @@ public class ResidentService {
                 .phoneNumber(residentRequestDTO.phoneNumber())
                 .email(residentRequestDTO.email())
                 .birthDate(residentRequestDTO.birthDate())
-                .residentialUnit(residentialUnit)
+//                .residentialUnit(residentialUnit)
                 .build();
 
         ResidentEntity residentSaved = residentRepository.save(resident);
@@ -46,7 +53,7 @@ public class ResidentService {
     }
 
     public Optional<ResidentResponseDTO> fetchResidentById(Long residentId) {
-        ResidentResponseDTO residentResponseDTO = this.residentRepository.findResidentById(residentId)
+        ResidentResponseDTO residentResponseDTO = this.residentRepository.findById(residentId)
                 .map(resident ->
                         ResidentResponseDTO.builder()
                                 .id(resident.getId())
@@ -55,7 +62,7 @@ public class ResidentService {
                                 .phoneNumber(resident.getPhoneNumber())
                                 .email(resident.getEmail())
                                 .birthDate(resident.getBirthDate())
-                                .residentialUnit(resident.getResidentialUnit())
+//                                .residentialUnit(resident.getResidentialUnit())
                                 .build()
                 ).orElseThrow(() -> new ResourceNotFoundException(residentId));
         return Optional.of(residentResponseDTO);
@@ -83,6 +90,26 @@ public class ResidentService {
     }
 
 
+    @Transactional
+    public ResidentResponseDTO updateResident(ResidentRequestDTO residentRequestDTO) {
+
+        ResidentEntity residentEntity = this.residentRepository.findById(residentRequestDTO.id()).orElseThrow(() -> new ResourceNotFoundException(residentRequestDTO.id()));
+
+        return mapToResidentResponseDTO(residentRepository.save(
+                ResidentEntity.builder()
+                        .id(residentEntity.getId())
+                        .name(residentRequestDTO.name())
+                        .cpf(residentRequestDTO.cpf())
+                        .email(residentRequestDTO.email())
+                        .birthDate(residentRequestDTO.birthDate())
+                        .phoneNumber(residentRequestDTO.phoneNumber())
+                        .build()
+
+        ));
+    }
+
+
+
     private ResidentResponseDTO mapToResidentResponseDTO(ResidentEntity resident) {
         return ResidentResponseDTO.builder()
                 .id(resident.getId())
@@ -91,7 +118,7 @@ public class ResidentService {
                 .email(resident.getEmail())
                 .birthDate(resident.getBirthDate())
                 .phoneNumber(resident.getPhoneNumber())
-                .residentialUnit(resident.getResidentialUnit())
+//                .residentialUnit(resident.getResidentialUnit())
                 .build();
     }
 
@@ -109,5 +136,4 @@ public class ResidentService {
 
         return PageableTranslator.translate(pageable, mappedFields);
     }
-
 }

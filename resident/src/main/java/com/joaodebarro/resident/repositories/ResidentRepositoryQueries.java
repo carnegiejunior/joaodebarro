@@ -1,5 +1,7 @@
-package com.joaodebarro.resident;
+package com.joaodebarro.resident.repositories;
 
+import com.joaodebarro.resident.entities.ResidentEntity;
+import com.joaodebarro.resident.dtos.ResidentRequestQueryDTO;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;

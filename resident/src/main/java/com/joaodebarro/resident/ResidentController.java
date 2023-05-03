@@ -1,6 +1,10 @@
 package com.joaodebarro.resident;
 
 import com.carnegieworks.exceptionHandler.defaultExceptions.ResourceNotFoundException;
+import com.joaodebarro.resident.dtos.ResidentRequestDTO;
+import com.joaodebarro.resident.dtos.ResidentRequestQueryDTO;
+import com.joaodebarro.resident.dtos.ResidentResponseDTO;
+import com.joaodebarro.resident.entities.ResidentEntity;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.ws.rs.Produces;
@@ -15,8 +19,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("api/v1/resident")
@@ -41,18 +45,10 @@ public class ResidentController {
         return ResponseEntity.status(HttpStatus.OK).body(residentResponse);
     }
 
-//    @Produces("application/json; charset=UTF-8")
-//    @GetMapping
-//    public ResponseEntity<Page<ResidentResponseDTO>> findAllResidents(
-//            @Valid @RequestBody ResidentRequestQueryDTO residentRequestQueryDTO,
-//            @PageableDefault(
-//                    size = 10,
-//                    page = 0,
-//                    direction = Sort.Direction.ASC,
-//                    sort = {}
-//            ) Pageable pageable) {
-//        return this.residentService.findAllResidents(residentRequestQueryDTO, pageable);
-//    }
+    @PutMapping
+    public ResponseEntity<ResidentResponseDTO> updateResident(@RequestBody @Valid  ResidentRequestDTO residentRequestDTO) {
+        return ResponseEntity.ok(residentService.updateResident(residentRequestDTO));
+    }
 
     @Produces("application/json; charset=UTF-8")
     @GetMapping
@@ -80,16 +76,11 @@ public class ResidentController {
         return this.residentService.findAllResidents(residentRequestQueryDTO, pageable);
     }
 
-
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteResidentById(@NotNull @PathVariable("id") Long residentId) {
         residentService.deleteResidentById(residentId);
     }
 
-    @PutMapping
-    public ResponseEntity<ResidentResponseDTO> updateResident(@RequestBody @Valid ResidentRequestDTO residentRegistrationRequest) {
-        throw new UnsupportedOperationException("not implemented yet");
-    }
 
 }

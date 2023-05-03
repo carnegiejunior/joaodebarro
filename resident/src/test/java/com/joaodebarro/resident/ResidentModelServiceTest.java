@@ -1,5 +1,10 @@
 package com.joaodebarro.resident;
 
+import com.joaodebarro.resident.dtos.ResidentRequestDTO;
+import com.joaodebarro.resident.entities.ResidentEntity;
+import com.joaodebarro.resident.entities.ResidentialUnitEntity;
+import com.joaodebarro.resident.repositories.ResidentRepository;
+import com.joaodebarro.resident.repositories.ResidentialUnitRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -56,7 +61,6 @@ public class ResidentModelServiceTest {
                 .phoneNumber(request.phoneNumber())
                 .email(request.email())
                 .birthDate(request.birthDate())
-                .residentialUnit(residentialUnitModel)
                 .build();
 
         when(residentRepository.save(residentModel)).thenReturn(residentModel);

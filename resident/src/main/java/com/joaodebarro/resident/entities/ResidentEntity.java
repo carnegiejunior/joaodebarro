@@ -1,4 +1,4 @@
-package com.joaodebarro.resident;
+package com.joaodebarro.resident.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
@@ -47,9 +47,9 @@ public class ResidentEntity {
     @Size(max = 14)
     private String phoneNumber;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "residential_unit_id", nullable = false)
-    @NotNull
-    private ResidentialUnitEntity residentialUnit;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "residential_unit_id", nullable = false)
+//    @NotNull
+//    private ResidentialUnitEntity residentialUnit;
 
 }
